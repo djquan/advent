@@ -1,33 +1,34 @@
 use std::collections::HashSet;
-use std::iter::FromIterator;
 use std::env;
 use std::fs;
+use std::iter::FromIterator;
 
 fn main() {
     let filename = env::args().nth(1).expect("Usage: ./run FILENAME");
-    let adjustments : Vec<i32> = fs::read_to_string(filename).expect("Unable to read file")
+    let adjustments: Vec<i32> = fs::read_to_string(filename)
+        .expect("Unable to read file")
         .lines()
         .map(|l| l.parse().expect("Invalid adjustment in file"))
         .collect();
 
-    println!("Part one: {}", frequency1(&adjustments) );
-    println!("Part two: {}", frequency2(&adjustments) );
+    println!("Part one: {}", frequency1(&adjustments));
+    println!("Part two: {}", frequency2(&adjustments));
 }
 
-pub fn frequency1(fs: &Vec<i32>) -> i32 {
-    fs.iter().sum()
+pub fn frequency1(adjustments: &Vec<i32>) -> i32 {
+    adjustments.iter().sum()
 }
 
-pub fn frequency2(fs: &Vec<i32>) -> i32 {
-    let mut freq = 0;
-    let mut seen_freqs: HashSet<i32> = HashSet::from_iter(vec![0]);
+pub fn frequency2(adjustments: &Vec<i32>) -> i32 {
+    let mut frequency = 0;
+    let mut seen_frequencies: HashSet<i32> = HashSet::from_iter(vec![0]);
     loop {
-        for f in fs {
-            freq += f;
-            if seen_freqs.contains(&freq) {
-                return freq;
+        for f in adjustments {
+            frequency += f;
+            if seen_frequencies.contains(&frequency) {
+                return frequency;
             }
-            seen_freqs.insert(freq);
+            seen_frequencies.insert(frequency);
         }
     }
 }
