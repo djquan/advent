@@ -23,8 +23,8 @@ pub fn frequency2(adjustments: &Vec<i32>) -> i32 {
     let mut frequency = 0;
     let mut seen_frequencies: HashSet<i32> = HashSet::from_iter(vec![0]);
     loop {
-        for f in adjustments {
-            frequency += f;
+        for adjustment in adjustments {
+            frequency += adjustment;
             if seen_frequencies.contains(&frequency) {
                 return frequency;
             }
