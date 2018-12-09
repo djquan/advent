@@ -16,10 +16,11 @@ fn main() {
         })
         .collect();
 
-    println!("{}", part_one(records));
+    println!("{}", part_one(&records));
+    println!("{}", part_two(&records, 10000));
 }
 
-fn part_one(input: Vec<(i32, i32)>) -> i32 {
+fn part_one(input: &Vec<(i32, i32)>) -> i32 {
     let (max_x, _) = input.iter().max_by_key(|&(x, _)| x).unwrap();
     let (_, max_y) = input.iter().max_by_key(|&(_, y)| y).unwrap();
     let max_x = *max_x + 1;
@@ -67,14 +68,48 @@ fn part_one(input: Vec<(i32, i32)>) -> i32 {
     v[0]
 }
 
+fn part_two(input: &Vec<(i32, i32)>, target_size: i32) -> i32 {
+    let (max_x, _) = input.iter().max_by_key(|&(x, _)| x).unwrap();
+    let (_, max_y) = input.iter().max_by_key(|&(_, y)| y).unwrap();
+    let max_x = *max_x + 1;
+    let max_y = *max_y + 1;
+
+    let mut points = vec![];
+    for x in 0..max_x {
+        for y in 0..max_y {
+            let sum: i32 = input
+                .iter()
+                .map(|point| {
+                    let distance = (point.0 - x).abs() + (point.1 - y).abs();
+                    distance
+                })
+                .sum();
+
+            if sum < target_size {
+                points.push((x, y));
+            };
+        }
+    }
+
+    points.len() as i32
+}
+
 #[cfg(test)]
 mod tests {
     use crate::part_one;
+    use crate::part_two;
 
     #[test]
     fn part_one_works() {
         let input = vec![(1, 1), (1, 6), (8, 3), (3, 4), (5, 5), (8, 9)];
 
-        assert_eq!(17, part_one(input));
+        assert_eq!(17, part_one(&input));
+    }
+
+    #[test]
+    fn part_two_works() {
+        let input = vec![(1, 1), (1, 6), (8, 3), (3, 4), (5, 5), (8, 9)];
+
+        assert_eq!(16, part_two(&input, 32));
     }
 }
