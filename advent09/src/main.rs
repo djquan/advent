@@ -1,7 +1,7 @@
 use std::collections::HashMap;
 
 fn main() {
-    println!("{}", part_one(416, 71975* 100));
+    println!("{}", part_one(416, 71975 * 100));
 }
 
 fn part_one(players: u32, last_marble_score: u32) -> u32 {
@@ -29,10 +29,9 @@ fn part_one(players: u32, last_marble_score: u32) -> u32 {
             current_marble_index = (current_marble_index + 2) % circle.len();
             circle.insert(current_marble_index, current_marble_value);
         }
-    };
+    }
 
     let (_, high_score) = score.iter().max_by_key(|&(_, y)| y).unwrap();
-
 
     *high_score
 }
@@ -50,6 +49,6 @@ mod test {
         assert_eq!(54718, part_one(21, 6111));
         assert_eq!(37305, part_one(30, 5807));
         assert_eq!(439341, part_one(416, 71975));
-        assert_eq!(439341, part_one(416, 71975* 100));
+        assert_eq!(439341, part_one(416, 71975 * 100));
     }
 }
