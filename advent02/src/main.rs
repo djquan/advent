@@ -7,13 +7,13 @@ fn main() {
     let ids: Vec<String> = fs::read_to_string(filename)
         .expect("Unable to read file")
         .lines()
-        .map(|l| l.parse().expect("Invalid adjustment in file"))
+        .map(|l| l.parse().expect("Invalid input in file"))
         .collect();
-    println!("Part 1: {}", checksum(&ids));
-    println!("Part 2: {}", correct_id(&ids));
+    println!("Part 1: {}", part_one(&ids));
+    println!("Part 2: {}", part_two(&ids));
 }
 
-pub fn correct_id(ids: &Vec<String>) -> String {
+pub fn part_two(ids: &Vec<String>) -> String {
     let (a, b) = differed_by_one(ids);
     let bytes_a = a.as_bytes();
     let bytes_b = b.as_bytes();
@@ -55,7 +55,7 @@ pub fn differ_by_one(a: &str, b: &str) -> bool {
     count == 1
 }
 
-pub fn checksum(ids: &Vec<String>) -> u32 {
+pub fn part_one(ids: &Vec<String>) -> u32 {
     let (t, th) =
         ids.iter()
             .map(letter_count)
@@ -94,8 +94,8 @@ pub fn letter_count(s: &String) -> (bool, bool) {
 
 #[cfg(test)]
 mod tests {
-    use checksum;
-    use correct_id;
+    use part_one;
+    use part_two;
     use differ_by_one;
     use differed_by_one;
     use letter_count;
@@ -123,7 +123,7 @@ mod tests {
             "ababab".to_string(),
         ];
 
-        assert_eq!(12, checksum(&input));
+        assert_eq!(12, part_one(&input));
     }
 
     #[test]
@@ -160,6 +160,6 @@ mod tests {
             "wvxyz".to_string(),
         ];
 
-        assert_eq!("fgij", correct_id(&input));
+        assert_eq!("fgij", part_two(&input));
     }
 }
