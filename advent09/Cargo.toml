@@ -1,7 +1,0 @@
-[package]
-name = "advent09"
-version = "0.1.0"
-authors = ["Dan Quan <daniel@quan.io>"]
-edition = "2018"
-
-[dependencies]
