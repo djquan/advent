@@ -11,15 +11,15 @@ fn main() {
         .map(|l| l.parse().expect("Invalid adjustment in file"))
         .collect();
 
-    println!("Part one: {}", frequency1(&adjustments));
-    println!("Part two: {}", frequency2(&adjustments));
+    println!("Part one: {}", part_one(&adjustments));
+    println!("Part two: {}", part_two(&adjustments));
 }
 
-pub fn frequency1(adjustments: &Vec<i32>) -> i32 {
+pub fn part_one(adjustments: &Vec<i32>) -> i32 {
     adjustments.iter().sum()
 }
 
-pub fn frequency2(adjustments: &Vec<i32>) -> i32 {
+pub fn part_two(adjustments: &Vec<i32>) -> i32 {
     let mut frequency = 0;
     let mut seen_frequencies: HashSet<i32> = HashSet::from_iter(vec![0]);
     loop {
@@ -35,21 +35,21 @@ pub fn frequency2(adjustments: &Vec<i32>) -> i32 {
 
 #[cfg(test)]
 mod tests {
-    use frequency1;
-    use frequency2;
+    use crate::part_one;
+    use crate::part_two;
 
     #[test]
-    fn part_one() {
-        assert_eq!(3, frequency1(vec![1, 1, 1].as_ref()));
-        assert_eq!(0, frequency1(vec![1, 1, -2].as_ref()));
-        assert_eq!(-6, frequency1(vec![-1, -2, -3].as_ref()));
+    fn part_one_works() {
+        assert_eq!(3, part_one(vec![1, 1, 1].as_ref()));
+        assert_eq!(0, part_one(vec![1, 1, -2].as_ref()));
+        assert_eq!(-6, part_one(vec![-1, -2, -3].as_ref()));
     }
 
     #[test]
-    fn part_two() {
-        assert_eq!(0, frequency2(vec![1, -1].as_ref()));
-        assert_eq!(10, frequency2(vec![3, 3, 4, -2, -4].as_ref()));
-        assert_eq!(5, frequency2(vec![-6, 3, 8, 5, -6].as_ref()));
-        assert_eq!(14, frequency2(vec![7, 7, -2, -7, -4].as_ref()));
+    fn part_two_works() {
+        assert_eq!(0, part_two(vec![1, -1].as_ref()));
+        assert_eq!(10, part_two(vec![3, 3, 4, -2, -4].as_ref()));
+        assert_eq!(5, part_two(vec![-6, 3, 8, 5, -6].as_ref()));
+        assert_eq!(14, part_two(vec![7, 7, -2, -7, -4].as_ref()));
     }
 }
