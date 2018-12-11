@@ -43,7 +43,7 @@ fn part_one(input: i32) -> (u32, u32) {
     (*x, *y)
 }
 
-fn part_two(input: i32) -> (u32, u32, u32) {
+fn part_two(input: i32) -> (usize, usize, usize) {
     let mut grid: Vec<Vec<i32>> = vec![];
     for y in 0..300 {
         let mut row = vec![];
@@ -58,19 +58,30 @@ fn part_two(input: i32) -> (u32, u32, u32) {
         grid.push(row);
     }
 
-    let mut scores: HashMap<(u32, u32, u32), i32> = HashMap::new();
+    let mut scores: HashMap<(usize, usize, usize), i32> = HashMap::new();
 
-    for i in 1..=30 {
+    for i in 1..=300 {
         for y in 0..300 - i {
             for x in 0..300 - i {
                 let mut score = 0;
-                for x2 in x..x + i {
-                    for y2 in y..y + i {
-                        score += grid[y2][x2];
+                if x > 0 && y > 0 && i > 1 {
+                    score = *(scores.entry((x, y, i - 1)).or_default());
+                    for x2 in x..x + i {
+                        score += grid[y + i - 1][x2];
                     }
-                }
 
-                scores.insert((x as u32 + 1, y as u32 + 1, i as u32), score);
+                    for y2 in y..y + i {
+                        score += grid[y2][x + i -1];
+                    }
+                } else {
+                    for x2 in x..x + i {
+                        for y2 in y..y + i {
+                            score += grid[y2][x2];
+                        }
+                    }
+                };
+
+                scores.insert((x, y, i), score);
             }
         }
     }
@@ -79,7 +90,7 @@ fn part_two(input: i32) -> (u32, u32, u32) {
         .iter()
         .max_by_key(|&(_, score)| score).unwrap();
 
-    (*x, *y, *size)
+    (*x + 1, *y + 1, *size)
 }
 
 #[cfg(test)]
