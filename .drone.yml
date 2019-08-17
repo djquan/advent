@@ -1,0 +1,11 @@
+kind: pipeline
+name: default
+
+steps:
+- name: test
+  image: rust
+  commands:
+    - find . -name Cargo.toml -print0 | xargs -n 1 -0 cargo test --manifest-path
+
+image_pull_secrets:
+- dockerconfigjson
